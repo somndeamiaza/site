@@ -1,0 +1,316 @@
+/* Importing the Montserrat font */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500');
+
+/* Root level styles */
+:root {
+  --sidebar-width: 250px;
+  --toggler-size: 80px;
+  font-size: 1rem; /* Base font size, changed to rem for better scaling */
+}
+
+/* Global box-sizing and reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #fafafa;
+  font-family: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Container styling */
+.container {
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Heading styling */
+.heading {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 2.5rem; /* Adjusted for responsive scaling */
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  padding: 3.5rem 0;
+  color: #1a1a1a;
+}
+
+.heading span {
+  display: block;
+}
+
+/* Gallery styling */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem;
+}
+
+.gallery-item {
+  flex: 1 0 24rem;
+  margin: 1rem;
+  box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.gallery-image {
+  display: block;
+  width: 100%;
+  height: auto; /* Changed to auto for better aspect ratio handling */
+  object-fit: cover;
+  transition: transform 400ms ease-out;
+}
+
+.gallery-image:hover {
+  transform: scale(1.15);
+}
+
+/* CSS Grid support */
+@supports (display: grid) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    grid-gap: 2rem;
+  }
+
+  .gallery,
+  .gallery-item {
+    margin: 0;
+  }
+}
+
+/* Wrapper styling */
+.wrapper {
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  display: flex;
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: var(--sidebar-width);
+  transform: translateX(calc(var(--sidebar-width) * -1));
+  background: linear-gradient(to bottom right, Tomato, Wheat);
+  background-size: 400% 400%;
+  background-position: 90% 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  opacity: .5;
+  transition: transform .6s, background-position 1s .6s;
+}
+
+.input-toggler:checked ~ .sidebar {
+  opacity: .9;
+  transform: translateX(0);
+  background-position: 0 0;
+}
+
+/* Content styling */
+.content, .content div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.content div[id] {
+  display: none;
+}
+
+/* Menu styling */
+.menu {
+  list-style-type: none;
+}
+
+.menu__link {
+  color: white;
+  font-weight: 100;
+  text-decoration: none;
+  font-size: 1.5rem; /* Adjusted for responsiveness */
+  line-height: 1.5;
+}
+
+.menu__link:hover,
+.menu__link:focus,
+.menu__link:active {
+  color: Black;
+}
+
+/* Menu toggler styling */
+.menu-toggler {
+  display: block;
+  width: var(--toggler-size);
+  height: var(--toggler-size);
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.menu-toggler__line {
+  height: calc(var(--toggler-size) / 5);
+  background: Tomato;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transition: transform 0.5s, opacity 0.25s;
+  animation-name: slidein;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+}
+
+.input-toggler:checked ~ .menu-toggler .menu-toggler__line {
+  transition: transform 0.5s, opacity 0.25s;
+}
+
+.menu-toggler__line:nth-child(2) {
+  top: calc(var(--toggler-size) / 5 * 2);
+}
+
+.menu-toggler__line:nth-child(3) {
+  top: calc(var(--toggler-size) / 5 * 4);
+}
+
+.input-toggler {
+  display: none;
+}
+
+.input-toggler:checked ~ .menu-toggler .menu-toggler__line {
+  background: Wheat;
+}
+
+.input-toggler:checked ~ .menu-toggler .menu-toggler__line:nth-child(1) {
+  transform: translateY(calc(var(--toggler-size) / 5 * 2)) rotate(45deg);
+}
+
+.input-toggler:checked ~ .menu-toggler .menu-toggler__line:nth-child(2) {
+  opacity: 0;
+}
+
+.input-toggler:checked ~ .menu-toggler .menu-toggler__line:nth-child(3) {
+  transform: translateY(calc(var(--toggler-size) / 5 * -2)) rotate(-45deg);
+}
+
+@keyframes slidein {
+  from { left: -200%; right: 200%; }
+  to { left: 0; right: 0; }
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .heading {
+    font-size: 2.2rem; /* Adjusted for better scaling */
+  }
+
+  .gallery-item {
+    flex: 1 0 22rem;
+    margin: 0.8rem;
+  }
+
+  .menu__link {
+    font-size: 1.8rem; /* Adjusted for better scaling */
+  }
+
+  .menu-toggler {
+    top: 5px;
+    left: 5px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
+
+  .gallery-item {
+    flex: 1 0 20rem;
+    margin: 0.5rem;
+    background-image:cover;
+
+  }
+
+  .menu__link {
+    font-size: 1.6rem;
+  }
+
+  .menu-toggler {
+    width: calc(var(--toggler-size) * 0.8);
+    height: calc(var(--toggler-size) * 0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .gallery-item {
+    flex: 1 0 18rem;
+    margin: 0.3rem;
+  }
+
+  .menu__link {
+    font-size: 1.4rem;
+  }
+
+  .menu-toggler {
+    width: calc(var(--toggler-size) * 0.6);
+    height: calc(var(--toggler-size) * 0.6);
+  }
+
+  .menu-toggler__line {
+    height: calc((var(--toggler-size) * 0.6) / 5); /* Adjust line height accordingly */
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 1.6rem;
+  }
+
+  .gallery-item {
+    flex: 1 0 100%;
+    margin: 0.2rem 0;
+  }
+
+  .menu__link {
+    font-size: 1.2rem;
+  }
+
+  .menu-toggler {
+    width: calc(var(--toggler-size) * 0.5);
+    height: calc(var(--toggler-size) * 0.5);
+  }
+
+  .menu-toggler__line {
+    height: calc((var(--toggler-size) * 0.5) / 5); /* Adjust line height accordingly */
+  }
+}
